@@ -42,9 +42,10 @@ class ViewController: UIViewController {
                 Global.logger.error(error)
             case .finished: return
             }
-        }, receiveValue: { pathList in
+        }, receiveValue: { [weak self] pathList in
+            guard let self = self else { return }
+            
             // clean up existing dog cancelables
-            self.imageCancellables.forEach { $0.cancel() }
             self.imageCancellables.removeAll()
             
             // add image views for each dog image url
@@ -53,7 +54,8 @@ class ViewController: UIViewController {
                 let imageView = UIImageView(image: UIImage(named: "ic_dog_loading"))
                 imageView.constrain.height(Self.imageHeight)
                 self.contentStack.addArrangedSubview(imageView)
-                let cancelable = imageView.loadRemoteImage(path: path).sink { image in
+                let cancelable = imageView.loadRemoteImage(path: path).sink { [weak imageView] image in
+                    guard let imageView = imageView else { return }
                     guard let image = image else {
                         imageView.image = UIImage(named: "ic_photo_broken")
                         return
@@ -69,8 +71,8 @@ class ViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.loadCancellable?.cancel()
-        self.imageCancellables.forEach { $0.cancel() }
+        self.loadCancellable = nil
+        self.imageCancellables.removeAll()
     }
 }
 
