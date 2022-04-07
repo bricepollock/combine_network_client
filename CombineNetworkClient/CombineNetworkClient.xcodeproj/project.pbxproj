@@ -25,6 +25,7 @@
 		408267CE27FE236500B29A05 /* NSDirectionalEdgeInsets+convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408267CA27FE1F6E00B29A05 /* NSDirectionalEdgeInsets+convenience.swift */; };
 		408267CF27FE236500B29A05 /* UIEdgeInsets+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408267CB27FE1F6E00B29A05 /* UIEdgeInsets+Extensions.swift */; };
 		408267D127FE249000B29A05 /* Logger+error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408267D027FE248F00B29A05 /* Logger+error.swift */; };
+		408267D327FE27B000B29A05 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408267D227FE27B000B29A05 /* ImageService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		408267CB27FE1F6E00B29A05 /* UIEdgeInsets+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Extensions.swift"; sourceTree = "<group>"; };
 		408267CC27FE1F6E00B29A05 /* UIView+autolayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+autolayout.swift"; sourceTree = "<group>"; };
 		408267D027FE248F00B29A05 /* Logger+error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Logger+error.swift"; sourceTree = "<group>"; };
+		408267D227FE27B000B29A05 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 			children = (
 				408267B527FE1A9400B29A05 /* Logger.swift */,
 				408267BB27FE1AE300B29A05 /* NetworkService.swift */,
+				408267D227FE27B000B29A05 /* ImageService.swift */,
 				408267C027FE1B3F00B29A05 /* Models */,
 				408267BF27FE1B3A00B29A05 /* Services */,
 				408267B827FE1AA400B29A05 /* Extensions */,
@@ -231,6 +234,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				408267D127FE249000B29A05 /* Logger+error.swift in Sources */,
+				408267D327FE27B000B29A05 /* ImageService.swift in Sources */,
 				408267B627FE1A9400B29A05 /* Logger.swift in Sources */,
 				408267CD27FE236500B29A05 /* UIView+autolayout.swift in Sources */,
 				408267CF27FE236500B29A05 /* UIEdgeInsets+Extensions.swift in Sources */,

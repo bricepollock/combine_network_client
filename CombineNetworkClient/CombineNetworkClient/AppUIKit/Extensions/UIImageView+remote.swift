@@ -7,10 +7,22 @@
 
 import Foundation
 import UIKit
+import Combine
 
 extension UIImageView {
-    public func loadRemoteImage(path: String) {
-        // TODO: Implement image service / caching
-        self.image = UIImage(named: "ic_photo_broken")
+    fileprivate static var imageLoadingList: [AnyCancellable] = []
+    public func loadRemoteImage(path: String) -> AnyPublisher<UIImage?, Never> {
+        return ImageService.shared.loadImage(from: path)
+            .tryMap{ data -> UIImage? in
+                guard let image = UIImage(data: data) else {
+                    throw URLError(.cannotDecodeContentData)
+                }
+                return image
+            }
+            .catch { error in
+                return Just(nil).eraseToAnyPublisher()
+            }
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
     }
 }

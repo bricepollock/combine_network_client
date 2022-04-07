@@ -15,7 +15,8 @@ class ViewController: UIViewController {
     private let scrollView = UIScrollView()
     private let contentStack = UIStackView()
     
-    private var loadCancelable: Cancellable?
+    private var loadCancellable: Cancellable?
+    private var imageCancellables: [Cancellable] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +36,7 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.loadCancelable = self.viewModel.dogs().sink(receiveCompletion: { completion in
+        self.loadCancellable = self.viewModel.dogs().sink(receiveCompletion: { completion in
             switch completion {
             case .failure(let error):
                 Global.logger.error(error)
@@ -47,14 +48,22 @@ class ViewController: UIViewController {
                 let imageView = UIImageView(image: UIImage(named: "ic_dog_loading"))
                 imageView.constrain.height(Self.imageHeight)
                 self.contentStack.addArrangedSubview(imageView)
-                imageView.loadRemoteImage(path: path)
+                let cancelable = imageView.loadRemoteImage(path: path).sink { image in
+                    guard let image = image else {
+                        imageView.image = UIImage(named: "ic_photo_broken")
+                        return
+                    }
+                    imageView.image = image
+                }
+                self.imageCancellables.append(cancelable)
             }
         })
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.loadCancelable?.cancel()
+        self.loadCancellable?.cancel()
+        self.imageCancellables.forEach { $0.cancel() }
     }
 }
 
