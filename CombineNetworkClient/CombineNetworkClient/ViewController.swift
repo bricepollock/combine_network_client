@@ -43,6 +43,11 @@ class ViewController: UIViewController {
             case .finished: return
             }
         }, receiveValue: { pathList in
+            // clean up existing dog cancelables
+            self.imageCancellables.forEach { $0.cancel() }
+            self.imageCancellables.removeAll()
+            
+            // add image views for each dog image url
             self.contentStack.removeAll()
             pathList.forEach { path in
                 let imageView = UIImageView(image: UIImage(named: "ic_dog_loading"))
@@ -55,6 +60,8 @@ class ViewController: UIViewController {
                     }
                     imageView.image = image
                 }
+                
+                // keep request alive by stashing the cancelable
                 self.imageCancellables.append(cancelable)
             }
         })
